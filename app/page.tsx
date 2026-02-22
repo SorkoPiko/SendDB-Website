@@ -1,12 +1,7 @@
 "use client";
 
 import { Link } from "@heroui/link";
-import { Snippet } from "@heroui/snippet";
-import { Code } from "@heroui/code";
 import { button as buttonStyles } from "@heroui/theme";
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import { Chip } from "@heroui/chip";
-import { Divider } from "@heroui/divider";
 import { Image } from "@heroui/image";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
@@ -15,7 +10,7 @@ import 'swiper/css/pagination';
 
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
-import { DeveloperIcon, DiscordIcon, GeodeIcon, GithubIcon } from "@/components/icons";
+import { DeveloperIcon, DiscordIcon, GeodeIcon } from "@/components/icons";
 
 export default function Home() {
   const screenshots = [
@@ -61,7 +56,7 @@ export default function Home() {
             href={siteConfig.links.api}
           >
             <DeveloperIcon size={20} />
-            API
+            API Documentation
           </Link>
         </div>
       </section>
@@ -134,6 +129,9 @@ export default function Home() {
                     </SwiperSlide>
                   ))}
                 </Swiper>
+              </div>
+              <div className="p-4 text-center text-sm text-default-500">
+                Screenshots from the <a href={siteConfig.links.geode} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary-hover">Geode mod</a>
               </div>
             </div>
           </div>

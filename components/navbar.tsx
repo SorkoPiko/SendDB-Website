@@ -26,6 +26,7 @@ import {
   SearchIcon,
   Logo,
   DeveloperIcon,
+  GeodeIcon,
 } from "@/components/icons";
 import { usePathname } from "next/navigation";
 
@@ -109,19 +110,19 @@ export const Navbar = () => {
         justify="end"
       >
         <NavbarItem className="hidden sm:flex gap-2">
-          <Link isExternal aria-label="Twitter" href={siteConfig.links.twitter}>
+          <Link isExternal title="Twitter" aria-label="Twitter" href={siteConfig.links.twitter}>
             <TwitterIcon className="text-default-500" />
           </Link>
-          <Link isExternal aria-label="Discord" href={siteConfig.links.discord}>
+          <Link isExternal title="Discord" aria-label="Discord" href={siteConfig.links.discord}>
             <DiscordIcon className="text-default-500" />
           </Link>
-          <Link isExternal aria-label="Github" href={siteConfig.links.github}>
+          <Link isExternal title="Github" aria-label="Github" href={siteConfig.links.github}>
             <GithubIcon className="text-default-500" />
           </Link>
-          {/* <Link isExternal aria-label="Geode" href={siteConfig.links.geode}>
+          <Link isExternal title="Geode" aria-label="Geode" href={siteConfig.links.geode}>
             <GeodeIcon className="text-default-500" />
-          </Link> */}
-          <Link isExternal aria-label="Geode" href={siteConfig.links.api}>
+          </Link>
+          <Link isExternal title="API Docs" aria-label="API Docs" href={siteConfig.links.api}>
             <DeveloperIcon className="text-default-500" />
           </Link>
           <ThemeSwitch />
@@ -130,8 +131,8 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-          <GithubIcon className="text-default-500" />
+        <Link isExternal title="Discord" aria-label="Discord" href={siteConfig.links.discord}>
+          <DiscordIcon className="text-default-500" />
         </Link>
         <ThemeSwitch />
         <NavbarMenuToggle />
