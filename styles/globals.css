@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@plugin '../hero.ts';
+
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+    --font-sans: "font", sans-serif;
+    --font-mono: "monospace", monospace;
+
+    --color-primary: var(--color-green-500);
+    --color-primary-hover: var(--color-green-600);
+    --color-primary-active: var(--color-green-700);
+    --color-primary-light: var(--color-green-100);
+    --color-primary-dark: var(--color-green-900);
+
+    --color-secondary: var(--color-purple-500);
+    --color-secondary-hover: var(--color-purple-600);
+    --color-secondary-active: var(--color-purple-700);
+    --color-secondary-light: var(--color-purple-100);
+    --color-secondary-dark: var(--color-purple-900);
+
+    --color-background: var(--white);
+    --color-surface: var(--white);
+    --color-error: var(--red-500);
+
+    --color-discord: #7289da;
+}
