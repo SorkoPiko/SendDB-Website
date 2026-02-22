@@ -19,6 +19,7 @@ export const siteConfig = {
   ],
   links: {
     github: "https://github.com/SorkoPiko/SendDB-Website",
+    sorkopiko_github: "https://github.com/SorkoPiko",
     twitter: "https://x.com/senddb_gd",
     sorkopiko_twitter: "https://x.com/SorkoPiko",
     discord: "https://discord.senddb.dev",

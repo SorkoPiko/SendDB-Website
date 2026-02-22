@@ -28,3 +28,11 @@
 
     --color-discord: #7289da;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  scrollbar-width: none;
+}

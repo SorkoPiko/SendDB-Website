@@ -60,7 +60,15 @@ export default function RootLayout({
               </Link>
               <Link
                 isExternal
-                className="flex items-center gap-1 text-current ml-4"
+                className="flex items-center gap-1 text-current ml-2"
+                href={siteConfig.links.sorkopiko_github}
+                title="GitHub account"
+              >
+                <GithubIcon className="text-default-500" />
+              </Link>
+              <Link
+                isExternal
+                className="flex items-center gap-1 text-current ml-2"
                 href={siteConfig.links.sorkopiko_twitter}
                 title="Twitter profile"
               >
