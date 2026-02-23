@@ -204,3 +204,22 @@ export const SelectIcon: React.FC<IconSvgProps> = ({
     </svg>
   );
 };
+
+export const FilterIcon: React.FC<IconSvgProps> = ({
+  size = 24,
+  width,
+  height,
+  ...props
+}) => (
+  <svg
+    height={size || height}
+    viewBox="0 0 24 24"
+    width={size || width}
+    {...props}
+  >
+    <path
+      d="M10 14L4 5V3H20V5L14 14V20L10 22V14Z"
+      fill="currentColor"
+    />
+  </svg>
+);

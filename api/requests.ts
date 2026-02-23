@@ -9,6 +9,7 @@ export interface LeaderboardQuery {
   offset: number;
   rate_filter: RateFilter | null;
   gamemode_filter: GamemodeFilter | null;
+  search: string | null;
 }
 
 export interface TrendingLeaderboardQuery {

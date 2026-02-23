@@ -1,14 +1,16 @@
 "use client";
 
-import { fetchLeaderboard } from "@/api/integration";
-import { GamemodeFilter, LeaderboardLevel, RateFilter } from "@/api/models";
+import { fetchLeaderboard, fetchLevel } from "@/api/integration";
+import { GamemodeFilter, LeaderboardLevel, Level, RateFilter } from "@/api/models";
 import { title } from "@/components/primitives";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Divider } from "@heroui/divider";
 import { Spinner } from "@heroui/spinner";
 import { Input } from "@heroui/input";
 import LevelRow from "@/components/level/levelRow";
 import LevelPreview from "@/components/level/levelPreview";
 import { SearchIcon } from "@/components/icons";
+import FilterDropdown from "@/components/filterDropdown";
 
 const PAGE_SIZE = 50;
 
@@ -39,6 +41,27 @@ export default function LevelsPage() {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
+  const [levelDetail, setLevelDetail] = useState<Level | null>(null);
+  const [isLoadingDetail, setIsLoadingDetail] = useState(false);
+
+  const handleSelectLevel = useCallback(async (level: LeaderboardLevel) => {
+    setLevelDetail(null);
+    if (selectedLevel?.level_id === level.level_id) {
+      setSelectedLevel(null);
+      return;
+    }
+  
+    setSelectedLevel(level);
+    setIsLoadingDetail(true);
+
+    const response = await fetchLevel(level.level_id);
+    if (response.success && response.data) {
+      setLevelDetail(response.data);
+    }
+
+    setIsLoadingDetail(false);
+  }, [selectedLevel]);
+
   useEffect(() => {
     const t = setTimeout(() => setDebouncedSearch(search), 350);
     return () => clearTimeout(t);
@@ -65,6 +88,7 @@ export default function LevelsPage() {
         limit: PAGE_SIZE,
         rate_filter: convertToServerFilter(rate),
         gamemode_filter: convertToServerFilter(gamemode),
+        search: debouncedSearch || null,
       });
 
       if (response.success && response.data) {
@@ -97,17 +121,9 @@ export default function LevelsPage() {
   }, [hasMore, isFetchingMore, isLoading, offset, loadLevels]);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-64px)]">
-      <div className="width-full flex-shrink-0 px-6 pt-2 pb-4 border-b border-divider">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 flex-wrap">
-          <h1 className={title({ size: "sm" })}>Levels</h1>
-          {total > 0 && (
-            <span className="text-sm text-default-400">{total.toLocaleString()} levels</span>
-          )}
-        </div>
-      </div>
-
-      <div className="flex flex-1 overflow-hidden max-w-7xl mx-auto w-full">
+    <div className="flex flex-col h-[calc(100vh-64px-48px)]">
+      <Divider />
+      <div className="flex flex-1 overflow-hidden mx-auto w-full">
         <div className="w-80 flex-shrink-0 flex flex-col border-r border-divider">
           <div className="flex-shrink-0 p-3 border-b border-divider space-y-3 bg-default-50/30">
             <Input
@@ -118,45 +134,25 @@ export default function LevelsPage() {
               startContent={
                 <SearchIcon size={16} className="w-3.5 h-3.5 text-default-400" />
               }
+              isClearable
+              onClear={() => setSearch("")}
               classNames={{ inputWrapper: "h-8" }}
             />
 
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-widest text-default-400 mb-1.5">Rate</p>
-              <div className="flex flex-wrap gap-1">
-                {RATE_OPTIONS.map((d) => (
-                  <button
-                    key={d}
-                    onClick={() => setRate(d)}
-                    className={`text-xs px-2.5 py-1 rounded-full border transition-all font-medium capitalize
-                      ${rate === d
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "border-divider text-default-500 hover:border-default-400 hover:text-default-700"
-                      }`}
-                  >
-                    {d}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <div className="flex items-center gap-2">
+              <FilterDropdown
+                label="Rate"
+                value={rate}
+                options={RATE_OPTIONS}
+                onChange={setRate}
+              />
 
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-widest text-default-400 mb-1.5">Gamemode</p>
-              <div className="flex flex-wrap gap-1">
-                {GAMEMODE_OPTIONS.map((d) => (
-                  <button
-                    key={d}
-                    onClick={() => setGamemode(d)}
-                    className={`text-xs px-2.5 py-1 rounded-full border transition-all font-medium capitalize
-                      ${gamemode === d
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "border-divider text-default-500 hover:border-default-400 hover:text-default-700"
-                      }`}
-                  >
-                    {d}
-                  </button>
-                ))}
-              </div>
+              <FilterDropdown
+                label="Gamemode"
+                value={gamemode}
+                options={GAMEMODE_OPTIONS}
+                onChange={setGamemode}
+              />
             </div>
           </div>
 
@@ -178,7 +174,7 @@ export default function LevelsPage() {
                     level={level}
                     rank={i + 1}
                     isSelected={selectedLevel?.level_id === level.level_id}
-                    onClick={() => setSelectedLevel(level)}
+                    onClick={() => handleSelectLevel(level)}
                   />
                 ))}
 
@@ -200,10 +196,11 @@ export default function LevelsPage() {
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <LevelPreview level={selectedLevel} />
+        <div className="flex-1 flex flex-col overflow-hidden items-center">
+          <LevelPreview level={levelDetail} lbLevel={selectedLevel} isLoadingDetail={isLoadingDetail} />
         </div>
       </div>
+      <Divider />
     </div>
   );
 }

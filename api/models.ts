@@ -3,8 +3,20 @@ export interface Send {
 }
 
 export interface CreatorLevel {
+  name: string;
   level_id: number;
   send_count: number;
+}
+
+export interface LevelCreator {
+  name: string;
+  player_id: number;
+}
+
+export interface LeaderboardRate {
+  difficulty: number;
+  points: number;
+  stars: number;
 }
 
 export interface Rate {
@@ -16,7 +28,9 @@ export interface Rate {
 }
 
 export interface Level {
+  name: string;
   level_id: number;
+  creator: LevelCreator;
   sends: Send[];
   accurate: boolean;
   platformer: boolean;
@@ -42,6 +56,7 @@ export interface BatchLevel {
 }
 
 export interface Creator {
+  name: string;
   player_id: number;
   account_id: number;
   levels: CreatorLevel[];
@@ -56,9 +71,13 @@ export interface Creator {
 }
 
 export interface LeaderboardLevel {
+  name: string;
   level_id: number;
+  creator: LevelCreator;
   send_count: number;
   rank: number;
+  platformer: boolean;
+  rate: LeaderboardRate | null;
 }
 
 export interface TrendingLeaderboardLevel extends LeaderboardLevel {
