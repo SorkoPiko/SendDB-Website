@@ -14,11 +14,11 @@ import { useTheme } from "next-themes";
 import { peakTrendingScore, trendingScore } from "@/api/trending";
 
 const LENGTH_LABELS: Record<number, string> = {
-  1: "Tiny",
-  2: "Short",
-  3: "Medium",
-  4: "Long",
-  5: "XL"
+  0: "Tiny",
+  1: "Short",
+  2: "Medium",
+  3: "Long",
+  4: "XL"
 };
 
 const RATE_LABELS: Record<number, string> = {
