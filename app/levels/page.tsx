@@ -178,7 +178,7 @@ export default function LevelsPage() {
                   <LevelRow
                     key={level.level_id}
                     level={level}
-                    rank={i + 1}
+                    rank={level.rank}
                     isSelected={selectedLevel?.level_id === level.level_id}
                     onClick={() => handleSelectLevel(level)}
                   />

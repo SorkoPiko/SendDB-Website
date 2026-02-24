@@ -225,6 +225,26 @@ export const ShareIcon: React.FC<IconSvgProps> = ({
   </svg>
 );
 
+export const SquareShareIcon: React.FC<IconSvgProps> = ({
+  size = 24,
+  width,
+  height,
+  ...props
+}) => (
+  <svg
+    height={size || height}
+    viewBox="0 0 24 24"
+    width={size || width}
+    fill="none"
+    {...props}
+  >
+    <path
+      d="M10 3V5H5V19H19V14H21V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3H10ZM17.5858 5H13V3H21V11H19V6.41421L12 13.4142L10.5858 12L17.5858 5Z"
+      fill="currentColor"
+    />
+  </svg>
+);
+
 export const CheckIcon: React.FC<IconSvgProps> = ({
   size = 24,
   width,
@@ -240,6 +260,26 @@ export const CheckIcon: React.FC<IconSvgProps> = ({
   >
     <path
       d="M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z"
+      fill="currentColor"
+    />
+  </svg>
+);
+
+export const ChevronLeftIcon: React.FC<IconSvgProps> = ({
+  size = 24,
+  width,
+  height,
+  ...props
+}) => (
+  <svg
+    height={size || height}
+    viewBox="0 0 24 24"
+    width={size || width}
+    fill="none"
+    {...props}
+  >
+    <path
+      d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"
       fill="currentColor"
     />
   </svg>

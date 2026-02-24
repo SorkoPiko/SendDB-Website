@@ -1,4 +1,4 @@
-import { BatchLevel } from "./models";
+import { BatchLevel, LeaderboardCreator } from "./models";
 
 export interface SendDBAPIResponse<T> {
   success: boolean;
@@ -10,7 +10,12 @@ export interface BatchLevelResponse {
   levels: BatchLevel[];
 }
 
-export interface LeaderboardResponse<T> {
+export interface LevelLeaderboardResponse<T> {
   total: number;
   levels: T[];
+}
+
+export interface CreatorLeaderboardResponse {
+  total: number;
+  creators: LeaderboardCreator[];
 }

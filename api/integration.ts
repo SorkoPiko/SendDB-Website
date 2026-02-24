@@ -1,6 +1,6 @@
-import { Creator, LeaderboardCreator, LeaderboardLevel, Level, TrendingLeaderboardLevel } from "./models";
+import { Creator, LeaderboardLevel, Level, TrendingLeaderboardLevel } from "./models";
 import { BatchLevelRequest, CreatorLeaderboardQuery, LeaderboardQuery, TrendingLeaderboardQuery } from "./requests";
-import { BatchLevelResponse, LeaderboardResponse, SendDBAPIResponse } from "./responses";
+import { BatchLevelResponse, CreatorLeaderboardResponse, LevelLeaderboardResponse, SendDBAPIResponse } from "./responses";
 import { getCached, setCached } from "./cache";
 
 const API_BASE_URL = "https://api.senddb.dev/api/v1";
@@ -59,14 +59,14 @@ export async function fetchLevels(request: BatchLevelRequest): Promise<SendDBAPI
   return res;
 }
 
-export async function fetchLeaderboard(request: LeaderboardQuery): Promise<SendDBAPIResponse<LeaderboardResponse<LeaderboardLevel>>> {
-  return fetchPostGeneric<LeaderboardResponse<LeaderboardLevel>>(`${API_BASE_URL}/leaderboard`, request);
+export async function fetchLeaderboard(request: LeaderboardQuery): Promise<SendDBAPIResponse<LevelLeaderboardResponse<LeaderboardLevel>>> {
+  return fetchPostGeneric<LevelLeaderboardResponse<LeaderboardLevel>>(`${API_BASE_URL}/leaderboard`, request);
 }
 
-export async function fetchTrendingLeaderboard(request: TrendingLeaderboardQuery): Promise<SendDBAPIResponse<LeaderboardResponse<TrendingLeaderboardLevel>>> {
-  return fetchPostGeneric<LeaderboardResponse<TrendingLeaderboardLevel>>(`${API_BASE_URL}/leaderboard/trending`, request);
+export async function fetchTrendingLeaderboard(request: TrendingLeaderboardQuery): Promise<SendDBAPIResponse<LevelLeaderboardResponse<TrendingLeaderboardLevel>>> {
+  return fetchPostGeneric<LevelLeaderboardResponse<TrendingLeaderboardLevel>>(`${API_BASE_URL}/leaderboard/trending`, request);
 }
 
-export async function fetchCreatorLeaderboard(request: CreatorLeaderboardQuery): Promise<SendDBAPIResponse<LeaderboardResponse<LeaderboardCreator>>> {
-  return fetchPostGeneric<LeaderboardResponse<LeaderboardCreator>>(`${API_BASE_URL}/leaderboard/creators`, request);
+export async function fetchCreatorLeaderboard(request: CreatorLeaderboardQuery): Promise<SendDBAPIResponse<CreatorLeaderboardResponse>> {
+  return fetchPostGeneric<CreatorLeaderboardResponse>(`${API_BASE_URL}/leaderboard/creators`, request);
 }

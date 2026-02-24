@@ -15,9 +15,11 @@ export interface LeaderboardQuery {
 export interface TrendingLeaderboardQuery {
   limit: number;
   offset: number;
+  search: string | null;
 }
 
 export interface CreatorLeaderboardQuery {
   limit: number;
   offset: number;
+  search: string | null;
 }

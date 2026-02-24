@@ -12,10 +12,10 @@ export const siteConfig = {
       label: "Levels",
       href: "/levels",
     },
-    // {
-    //   label: "Creators",
-    //   href: "/creators",
-    // }
+    {
+      label: "Creators",
+      href: "/creators",
+    }
   ],
   links: {
     github: "https://github.com/SorkoPiko/SendDB-Website",

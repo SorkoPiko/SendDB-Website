@@ -5,13 +5,14 @@ import GamemodeBadge from "./gamemodeBadge";
 import RateBadge from "./rateBadge";
 import { Level, Creator } from "@/api/models";
 import { fetchCreator } from "@/api/integration";
-import { SelectIcon, ShareIcon, CheckIcon } from "../icons";
+import { SelectIcon, ShareIcon, CheckIcon, SquareShareIcon } from "../icons";
 import { Spinner } from "@heroui/spinner";
 import { Divider } from "@heroui/divider";
 import { ChartsReferenceLine, LineChart } from "@mui/x-charts";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useTheme } from "next-themes";
 import { peakTrendingScore, trendingScore } from "@/api/trending";
+import StatRow from "../statRow";
 
 const LENGTH_LABELS: Record<number, string> = {
   0: "Tiny",
@@ -29,20 +30,7 @@ const RATE_LABELS: Record<number, string> = {
   5: "Mythic"
 };
 
-function StatRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex items-baseline justify-between px-3 py-0.5 group">
-      <span className="text-[15px] uppercase tracking-[0.1em] text-default-400 font-medium transition-colors duration-200 group-hover:text-default-500 select-none">
-        {label}
-      </span>
-      <span className="text-base font-bold tabular-nums text-default-800 transition-colors duration-200 group-hover:text-default-900">
-        {value}
-      </span>
-    </div>
-  );
-}
-
-export default function LeaderboardLevelPreview({
+export default function LevelPreview({
   level,
   rank,
   isLoadingDetail,
@@ -197,8 +185,17 @@ export default function LeaderboardLevelPreview({
             </div>
             <p className="text-xs text-default-400">
               by&nbsp;
-              <span className="text-default-600 font-semibold">
+              <span className="text-default-600 font-semibold inline-flex items-center gap-1">
                 {level.creator.name}
+                <a
+                  href={`/creator#${level.creator.player_id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Open creator in new tab"
+                  className="flex items-center justify-center w-5 h-5 rounded transition-colors duration-150 text-default-400 hover:text-default-700 hover:bg-default-100 active:bg-default-200"
+                >
+                  <SquareShareIcon size={15} />
+                </a>
               </span>
             </p>
           </div>
