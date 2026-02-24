@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import GamemodeBadge from "./gamemodeBadge";
 import RateBadge from "./rateBadge";
 import { Level, Creator } from "@/api/models";
@@ -52,10 +52,13 @@ export default function LeaderboardLevelPreview({
   isLoadingDetail?: boolean;
 }) {
   const { resolvedTheme } = useTheme();
-  const muiTheme = createTheme({
-    palette: { mode: resolvedTheme === "dark" ? "dark" : "light" },
-    typography: { fontFamily: "var(--font-graph), sans-serif" },
-  });
+  const muiTheme = useMemo(
+    () => createTheme({
+      palette: { mode: resolvedTheme === "dark" ? "dark" : "light" },
+      typography: { fontFamily: "var(--font-graph), sans-serif" },
+    }),
+    [resolvedTheme]
+  );
 
   const rafRef = useRef<number | null>(null);
   const [liveTrendingScore, setLiveTrendingScore] = useState<number>(
@@ -227,7 +230,6 @@ export default function LeaderboardLevelPreview({
 
         <div className="flex flex-col">
           <StatRow label="Total Sends" value={level.sends.length.toLocaleString()} />
-          <StatRow label="Rank" value={`#${level.rank.toLocaleString()}`} />
           {!level.rate && (
             <StatRow label="Trending Score" value={(liveTrendingScore > 0 ? liveTrendingScore.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "N/A")} />
           )}
