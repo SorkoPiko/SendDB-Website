@@ -3,7 +3,7 @@ import { BatchLevelRequest, CreatorLeaderboardQuery, LeaderboardQuery, TrendingL
 import { BatchLevelResponse, LeaderboardResponse, SendDBAPIResponse } from "./responses";
 import { getCached, setCached } from "./cache";
 
-const API_BASE_URL = "http://api.senddb.dev/api/v1";
+const API_BASE_URL = "https://api.senddb.dev/api/v1";
 
 async function fetchGeneric<T>(url: string, options?: RequestInit): Promise<SendDBAPIResponse<T>> {
   try {
