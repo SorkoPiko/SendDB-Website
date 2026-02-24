@@ -290,8 +290,6 @@ export default function LeaderboardLevelPreview({
             )}
           </div>
         ) : null}
-
-        <Divider />
       </aside>
 
       <main className="flex-1 flex flex-col overflow-hidden">
