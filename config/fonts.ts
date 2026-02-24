@@ -1,4 +1,4 @@
-import { Fira_Code as FontMono, Inter as FontSans } from "next/font/google";
+import { JetBrains_Mono as FontMono, Inter as FontSans, IBM_Plex_Sans as FontGraph } from "next/font/google";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -8,4 +8,9 @@ export const fontSans = FontSans({
 export const fontMono = FontMono({
   subsets: ["latin"],
   variable: "--font-mono",
+});
+
+export const fontGraph = FontGraph({
+  subsets: ["latin"],
+  variable: "--font-graph",
 });
