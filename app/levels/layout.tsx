@@ -1,3 +1,9 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Levels",
+};
+
 export default function LevelsLayout({
   children,
 }: {
