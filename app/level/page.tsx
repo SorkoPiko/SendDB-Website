@@ -2,26 +2,35 @@
 
 import { fetchLevel } from "@/api/integration";
 import { Level } from "@/api/models";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Spinner } from "@heroui/spinner";
 import LevelPreview from "@/components/level/levelPreview";
 import { Divider } from "@heroui/divider";
 
-export default function LevelPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+export default function LevelPage() {
   const [level, setLevel] = useState<Level | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const loadLevel = async () => {
-      const response = await fetchLevel(parseInt(id));
-      if (response.success && response.data) {
-        setLevel(response.data);
+    const loadLevel = async (hash: string) => {
+      setIsLoading(true);
+      setLevel(null);
+      const id = parseInt(hash.replace("#", ""), 10);
+      if (!isNaN(id)) {
+        const response = await fetchLevel(id);
+        if (response.success && response.data) {
+          setLevel(response.data);
+        }
       }
       setIsLoading(false);
     };
-    loadLevel();
-  }, [id]);
+
+    loadLevel(window.location.hash);
+
+    const onHashChange = () => loadLevel(window.location.hash);
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
 
   if (isLoading) {
     return (
