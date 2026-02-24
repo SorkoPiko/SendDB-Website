@@ -2,7 +2,6 @@
 
 import { fetchLeaderboard, fetchLevel } from "@/api/integration";
 import { GamemodeFilter, LeaderboardLevel, Level, RateFilter } from "@/api/models";
-import { title } from "@/components/primitives";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Divider } from "@heroui/divider";
 import { Spinner } from "@heroui/spinner";
@@ -43,6 +42,13 @@ export default function LevelsPage() {
 
   const [levelDetail, setLevelDetail] = useState<Level | null>(null);
   const [isLoadingDetail, setIsLoadingDetail] = useState(false);
+
+  useEffect(() => {
+    fetch('/level.json')
+      .then((res) => res.json())
+      .then((data: Level) => setLevelDetail(data))
+      .catch((error) => console.error('Failed to load placeholder level:', error));
+  }, []);
 
   const handleSelectLevel = useCallback(async (level: LeaderboardLevel) => {
     setLevelDetail(null);
@@ -197,7 +203,7 @@ export default function LevelsPage() {
         </div>
 
         <div className="flex-1 flex flex-col overflow-hidden items-center">
-          <LevelPreview level={levelDetail} lbLevel={selectedLevel} isLoadingDetail={isLoadingDetail} />
+          <LevelPreview level={levelDetail} rank={selectedLevel?.rank || 0} isLoadingDetail={isLoadingDetail} />
         </div>
       </div>
       <Divider />

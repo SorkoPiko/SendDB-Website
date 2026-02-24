@@ -27,6 +27,7 @@
     --color-error: var(--red-500);
 
     --color-discord: #7289da;
+    --color-trending: #ff6600;
 }
 
 ::-webkit-scrollbar {
