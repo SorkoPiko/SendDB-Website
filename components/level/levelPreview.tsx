@@ -313,7 +313,7 @@ export default function LeaderboardLevelPreview({
                 label: "Sends",
                 color: "var(--color-primary)",
                 showMark: ({ index }) => {
-                  return !level.rate || index !== sortedSends.length;
+                  return (!level.rate || index !== sortedSends.length) && (level.rate !== null || index !== sortedSends.length);
                 },
                 xAxisId: "time-axis",
                 yAxisId: "send-axis",
