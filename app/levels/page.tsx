@@ -43,12 +43,12 @@ export default function LevelsPage() {
   const [levelDetail, setLevelDetail] = useState<Level | null>(null);
   const [isLoadingDetail, setIsLoadingDetail] = useState(false);
 
-  useEffect(() => {
-    fetch('/level.json')
-      .then((res) => res.json())
-      .then((data: Level) => setLevelDetail(data))
-      .catch((error) => console.error('Failed to load placeholder level:', error));
-  }, []);
+  // useEffect(() => {
+  //   fetch('/level.json')
+  //     .then((res) => res.json())
+  //     .then((data: Level) => setLevelDetail(data))
+  //     .catch((error) => console.error('Failed to load placeholder level:', error));
+  // }, []);
 
   const handleSelectLevel = useCallback(async (level: LeaderboardLevel) => {
     setLevelDetail(null);
