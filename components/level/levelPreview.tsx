@@ -5,7 +5,7 @@ import GamemodeBadge from "./gamemodeBadge";
 import RateBadge from "./rateBadge";
 import { Level, Creator } from "@/api/models";
 import { fetchCreator } from "@/api/integration";
-import { SelectIcon } from "../icons";
+import { SelectIcon, ShareIcon, CheckIcon } from "../icons";
 import { Spinner } from "@heroui/spinner";
 import { Divider } from "@heroui/divider";
 import { ChartsReferenceLine, LineChart } from "@mui/x-charts";
@@ -67,6 +67,15 @@ export default function LeaderboardLevelPreview({
   const [endTime, setEndTime] = useState<Date | null>(null);
   const [creator, setCreator] = useState<Creator | null>(null);
   const [isLoadingCreator, setIsLoadingCreator] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = () => {
+    const url = `${window.location.origin}/level#${level?.level_id}`;
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    });
+  };
 
   useEffect(() => {
     if (level) {
@@ -199,8 +208,17 @@ export default function LeaderboardLevelPreview({
           </div>
         </div>
 
-        <div className="py-1 px-4">
+        <div className="py-1 px-4 flex items-center justify-between">
           <span className="text-[15px] font-bold select-none">Level Info</span>
+          <button
+            onClick={handleShare}
+            title="Copy link to level"
+            className="flex items-center justify-center w-5 h-5 rounded transition-colors duration-150 text-default-400 hover:text-default-700 hover:bg-default-100 active:bg-default-200"
+          >
+            {copied
+              ? <CheckIcon size={18} className="text-success" />
+              : <ShareIcon size={18} />}
+          </button>
         </div>
 
         <Divider />
