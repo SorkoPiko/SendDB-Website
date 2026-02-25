@@ -1,5 +1,5 @@
 import { Spinner } from "@heroui/spinner";
-import { CheckIcon, ChevronLeftIcon, SelectIcon, ShareIcon, SquareShareIcon } from "../icons";
+import { SelectIcon } from "../icons";
 import { Creator, LeaderboardLevel, Level, BatchLevel } from "@/api/models";
 import { useState, useEffect, useCallback } from "react";
 import { Divider } from "@heroui/divider";
@@ -7,6 +7,7 @@ import StatRow from "../statRow";
 import LevelRow from "@/components/level/levelRow";
 import LevelPreview from "@/components/level/levelPreview";
 import { fetchLevels, fetchLevel } from "@/api/integration";
+import { RiArrowLeftSLine, RiCheckLine, RiExternalLinkFill, RiLinkM } from "@remixicon/react";
 
 export default function CreatorPreview({
     creator,
@@ -99,7 +100,7 @@ export default function CreatorPreview({
   if (!creator) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center text-default-400 gap-4 select-none">
-        <SelectIcon size={48} className="opacity-30" />
+        <SelectIcon size={48} className="opacity-40" />
         <span className="text-xs uppercase tracking-[0.25em]">Select a creator to preview</span>
       </div>
     );
@@ -127,8 +128,8 @@ export default function CreatorPreview({
             className="flex items-center justify-center w-5 h-5 rounded transition-colors duration-150 text-default-400 hover:text-default-700 hover:bg-default-100 active:bg-default-200"
           >
             {copied
-              ? <CheckIcon size={18} className="text-success" />
-              : <ShareIcon size={18} />}
+              ? <RiCheckLine size={18} className="text-success" />
+              : <RiLinkM size={18} />}
           </button>
         </div>
 
@@ -196,7 +197,7 @@ export default function CreatorPreview({
                     title="Open level in new tab"
                     className="flex items-center justify-center w-5 h-5 rounded transition-colors duration-150 text-default-400 hover:text-default-700 hover:bg-default-100 active:bg-default-200"
                   >
-                    <SquareShareIcon size={15} />
+                    <RiExternalLinkFill size={15} />
                   </a>
                 </div>
               </div>
@@ -216,7 +217,7 @@ export default function CreatorPreview({
               title="Back to creator info"
               className={`flex items-center justify-center w-5 h-5 rounded transition-all duration-300 ease-in-out text-default-400 hover:text-default-700 hover:bg-default-100 active:bg-default-200 ${selectedLevel ? "opacity-100 w-5" : "opacity-0 w-0 overflow-hidden"}`}
             >
-              <ChevronLeftIcon size={18} />
+              <RiArrowLeftSLine size={18} />
             </button>
             <span className="text-[15px] font-bold select-none">Levels</span>
           </div>

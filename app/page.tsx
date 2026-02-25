@@ -5,12 +5,13 @@ import { button as buttonStyles } from "@heroui/theme";
 import { Image } from "@heroui/image";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
+import { RiCodeSSlashLine, RiDiscordFill } from "@remixicon/react";
 import 'swiper/css';
 import 'swiper/css/pagination';
 
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
-import { DeveloperIcon, DiscordIcon, GeodeIcon } from "@/components/icons";
+import { GeodeIcon } from "@/components/icons";
 
 export default function Home() {
   const screenshots = [
@@ -47,7 +48,7 @@ export default function Home() {
             className={`${buttonStyles({ variant: "ghost", radius: "full" })} border-discord text-discord`}
             href={siteConfig.links.discord}
           >
-            <DiscordIcon size={20} />
+            <RiDiscordFill size={20} />
             Join the Discord
           </Link>
           <Link
@@ -55,7 +56,7 @@ export default function Home() {
             className={buttonStyles({ variant: "bordered", radius: "full" })}
             href={siteConfig.links.api}
           >
-            <DeveloperIcon size={20} />
+            <RiCodeSSlashLine size={20} />
             API Documentation
           </Link>
         </div>
@@ -154,7 +155,7 @@ export default function Home() {
               })} bg-discord text-white`}
               href={siteConfig.links.discord}
             >
-              <DiscordIcon size={20} />
+              <RiDiscordFill size={20} />
               Join the Discord
             </Link>
           </div>

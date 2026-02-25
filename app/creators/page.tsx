@@ -2,14 +2,13 @@
 
 import { fetchCreator, fetchCreatorLeaderboard } from "@/api/integration";
 import { Creator, LeaderboardCreator } from "@/api/models";
-import { CreatorLeaderboardResponse } from "@/api/responses";
-import CreatorPreview from "@/components/creator/creatorPreview";
-import CreatorRow from "@/components/creator/creatorRow";
-import { SearchIcon } from "@/components/icons";
 import { Divider } from "@heroui/divider";
 import { Input } from "@heroui/input";
 import { Spinner } from "@heroui/spinner";
+import { RiSearchLine } from "@remixicon/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import CreatorPreview from "@/components/creator/creatorPreview";
+import CreatorRow from "@/components/creator/creatorRow";
 
 const PAGE_SIZE = 50;
 
@@ -108,7 +107,7 @@ export default function CreatorsPage() {
                 value={search}
                 onValueChange={setSearch}
                 startContent={
-                  <SearchIcon size={16} className="w-3.5 h-3.5 text-default-400" />
+                  <RiSearchLine size={16} className="text-default-400" />
                 }
                 isClearable
                 onClear={() => setSearch("")}
@@ -123,7 +122,7 @@ export default function CreatorsPage() {
                 </div>
               ) : creators.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-32 text-default-400 text-sm gap-2 select-none">
-                  <SearchIcon className="w-8 h-8 opacity-40" />
+                  <RiSearchLine size={32} className="opacity-40" />
                   No creators found
                 </div>
               ) : (

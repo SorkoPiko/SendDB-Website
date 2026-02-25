@@ -20,15 +20,11 @@ import clsx from "clsx";
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import {
-  TwitterIcon,
-  GithubIcon,
-  DiscordIcon,
-  SearchIcon,
   Logo,
-  DeveloperIcon,
   GeodeIcon,
 } from "@/components/icons";
 import { usePathname } from "next/navigation";
+import { RiCodeSSlashLine, RiDiscordFill, RiGithubFill, RiSearchLine, RiTwitterFill } from "@remixicon/react";
 
 export const Navbar = () => {
     const searchInputRef = useRef<HTMLInputElement>(null);
@@ -67,7 +63,7 @@ export const Navbar = () => {
       labelPlacement="outside"
       placeholder="Search..."
       startContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
+        <RiSearchLine size={18} className="text-base text-default-400 pointer-events-none flex-shrink-0" />
       }
       type="search"
     />
@@ -111,19 +107,19 @@ export const Navbar = () => {
       >
         <NavbarItem className="hidden sm:flex gap-2">
           <Link isExternal title="Twitter" aria-label="Twitter" href={siteConfig.links.twitter}>
-            <TwitterIcon className="text-default-500" />
+            <RiTwitterFill size={24} className="text-default-500" />
           </Link>
           <Link isExternal title="Discord" aria-label="Discord" href={siteConfig.links.discord}>
-            <DiscordIcon className="text-default-500" />
+            <RiDiscordFill size={24} className="text-default-500" />
           </Link>
           <Link isExternal title="Github" aria-label="Github" href={siteConfig.links.github}>
-            <GithubIcon className="text-default-500" />
+            <RiGithubFill size={24} className="text-default-500" />
           </Link>
           <Link isExternal title="Geode" aria-label="Geode" href={siteConfig.links.geode}>
-            <GeodeIcon className="text-default-500" />
+            <GeodeIcon size={24} className="text-default-500" />
           </Link>
           <Link isExternal title="API Docs" aria-label="API Docs" href={siteConfig.links.api}>
-            <DeveloperIcon className="text-default-500" />
+            <RiCodeSSlashLine size={24} className="text-default-500" />
           </Link>
           <ThemeSwitch />
         </NavbarItem>
@@ -132,7 +128,7 @@ export const Navbar = () => {
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <Link isExternal title="Discord" aria-label="Discord" href={siteConfig.links.discord}>
-          <DiscordIcon className="text-default-500" />
+          <RiDiscordFill size={24} className="text-default-500" />
         </Link>
         <ThemeSwitch />
         <NavbarMenuToggle />

@@ -8,7 +8,7 @@ import { Providers } from "./providers";
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { Navbar } from "@/components/navbar";
-import { GithubIcon, TwitterIcon } from "@/components/icons";
+import { RiGithubFill, RiTwitterFill } from "@remixicon/react";
 
 export const metadata: Metadata = {
   title: {
@@ -64,7 +64,7 @@ export default function RootLayout({
                 href={siteConfig.links.sorkopiko_github}
                 title="GitHub account"
               >
-                <GithubIcon className="text-default-500" />
+                <RiGithubFill size={24} className="text-default-500" />
               </Link>
               <Link
                 isExternal
@@ -72,7 +72,7 @@ export default function RootLayout({
                 href={siteConfig.links.sorkopiko_twitter}
                 title="Twitter profile"
               >
-                <TwitterIcon className="text-default-500" />
+                <RiTwitterFill size={24} className="text-default-500" />
               </Link>
             </footer>
           </div>

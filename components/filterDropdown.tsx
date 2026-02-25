@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { FilterIcon } from "@/components/icons";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/dropdown";
 import { Button } from "@heroui/button";
+import { RiFilter2Fill } from "@remixicon/react";
 
 export default function FilterDropdown<T extends string>({
   label,
@@ -20,7 +19,7 @@ export default function FilterDropdown<T extends string>({
         <Button
           size="sm"
           variant="flat"
-          startContent={<FilterIcon size={18} className="text-default-400" />}
+          startContent={<RiFilter2Fill size={18} className="text-default-400" />}
           className="h-7 px-2.5 text-xs font-medium text-default-600 bg-default-100 data-[hover=true]:bg-default-200 border border-divider gap-1"
         >
           {value === options[0] ? label : (

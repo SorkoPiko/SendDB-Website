@@ -5,7 +5,7 @@ import GamemodeBadge from "./gamemodeBadge";
 import RateBadge from "./rateBadge";
 import { Level, Creator } from "@/api/models";
 import { fetchCreator } from "@/api/integration";
-import { SelectIcon, ShareIcon, CheckIcon, SquareShareIcon } from "../icons";
+import { SelectIcon } from "../icons";
 import { Spinner } from "@heroui/spinner";
 import { Divider } from "@heroui/divider";
 import { ChartsReferenceLine, LineChart } from "@mui/x-charts";
@@ -13,6 +13,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useTheme } from "next-themes";
 import { peakTrendingScore, trendingScore } from "@/api/trending";
 import StatRow from "../statRow";
+import { RiCheckLine, RiExternalLinkFill, RiLinkM } from "@remixicon/react";
 
 const LENGTH_LABELS: Record<number, string> = {
   0: "Tiny",
@@ -116,7 +117,7 @@ export default function LevelPreview({
   if (!level || !endTime) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center text-default-400 gap-4 select-none">
-        <SelectIcon size={48} className="opacity-30" />
+        <SelectIcon size={48} className="opacity-40" />
         <span className="text-xs uppercase tracking-[0.25em]">Select a level to preview</span>
       </div>
     );
@@ -197,7 +198,7 @@ export default function LevelPreview({
                     title="Open creator in new tab"
                     className="flex items-center justify-center w-5 h-5 rounded transition-colors duration-150 text-default-400 hover:text-default-700 hover:bg-default-100 active:bg-default-200"
                   >
-                    <SquareShareIcon size={15} />
+                    <RiExternalLinkFill size={15} />
                   </a>
                 )}
               </span>
@@ -217,8 +218,8 @@ export default function LevelPreview({
             className="flex items-center justify-center w-5 h-5 rounded transition-colors duration-150 text-default-400 hover:text-default-700 hover:bg-default-100 active:bg-default-200"
           >
             {copied
-              ? <CheckIcon size={18} className="text-success" />
-              : <ShareIcon size={18} />}
+              ? <RiCheckLine size={18} className="text-success" />
+              : <RiLinkM size={18} />}
           </button>
         </div>
 
