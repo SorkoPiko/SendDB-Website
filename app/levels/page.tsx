@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Divider } from "@heroui/divider";
 import { Spinner } from "@heroui/spinner";
 import { Input } from "@heroui/input";
-import { RiSearchLine } from "@remixicon/react";
+import { RiArrowLeftSLine, RiSearchLine } from "@remixicon/react";
 import LevelRow from "@/components/level/levelRow";
 import LevelPreview from "@/components/level/levelPreview";
 import FilterDropdown from "@/components/filterDropdown";
@@ -130,7 +130,7 @@ export default function LevelsPage() {
     <div className="flex flex-col h-[calc(100vh-64px-48px)]">
       <Divider />
       <div className="flex flex-1 overflow-hidden mx-auto w-full">
-        <div className="w-80 flex-shrink-0 flex flex-col border-r border-divider">
+        <div className={`flex-shrink-0 flex flex-col border-r border-divider ${selectedLevel ? "hidden md:flex md:w-80" : "flex w-full md:w-80"}`}>
           <div className="flex-shrink-0 p-3 border-b border-divider space-y-3 bg-default-50/30">
             <Input
               size="sm"
@@ -202,7 +202,16 @@ export default function LevelsPage() {
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col overflow-hidden items-center">
+        <div className={`flex-col overflow-hidden items-center ${selectedLevel ? "flex flex-1" : "hidden md:flex md:flex-1"}`}>
+          <div className="md:hidden flex items-center gap-2 px-3 py-2 border-b border-divider w-full flex-shrink-0">
+            <button
+              onClick={() => { setSelectedLevel(null); setLevelDetail(null); }}
+              className="flex items-center gap-1 text-sm text-default-600 hover:text-default-900 active:text-default-700"
+            >
+              <RiArrowLeftSLine size={18} />
+              Back
+            </button>
+          </div>
           <LevelPreview level={levelDetail} rank={selectedLevel?.rank || 0} isLoadingDetail={isLoadingDetail} />
         </div>
       </div>

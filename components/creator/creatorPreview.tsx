@@ -107,8 +107,8 @@ export default function CreatorPreview({
   }
 
   return (
-    <div className="flex-1 flex overflow-hidden w-full">
-      <aside className={`border-r border-divider flex flex-col overflow-y-auto transition-all duration-300 ease-in-out max-w-sm ${selectedLevel ? (collapseCreatorInfo ? "w-0 min-w-0 opacity-0" : "w-1/6") : "w-1/3 min-w-[220px]"}`}>
+    <div className="flex-1 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden w-full">
+      <aside className={`border-b md:border-b-0 border-r-0 md:border-r border-divider flex flex-col flex-shrink-0 md:overflow-y-auto transition-all duration-300 ease-in-out md:max-w-sm ${selectedLevel ? (collapseCreatorInfo ? "md:w-0 md:min-w-0 md:opacity-0" : "md:w-1/6") : "w-full md:w-1/3 md:min-w-[220px]"}`}>
         <div className="py-3 px-5 pb-4 flex items-stretch gap-3">
           <div className="min-w-0 flex-1 flex flex-col justify-center">
             <div className="flex items-center gap-2 mb-1">
@@ -209,8 +209,8 @@ export default function CreatorPreview({
         </div>
       </aside>
 
-      <main className="flex-1 flex overflow-hidden">
-        <div className="w-72 flex-shrink-0 flex flex-col overflow-hidden">
+      <main className="flex-1 flex flex-col md:flex-row md:overflow-hidden">
+        <div className={`flex-shrink-0 flex-col overflow-hidden ${selectedLevel ? "hidden md:flex md:w-72" : "flex w-full md:w-72"}`}>
           <div className="flex-shrink-0 py-1 px-2 flex items-center gap-1">
             <button
               onClick={() => { setSelectedLevel(null); setLevelDetail(null); }}
@@ -246,8 +246,17 @@ export default function CreatorPreview({
         </div>
 
         <div
-          className={`flex flex-col overflow-hidden border-l border-divider transition-all duration-300 ease-in-out w-full`}
+          className={`flex-col overflow-hidden border-t md:border-t-0 border-l-0 md:border-l border-divider transition-all duration-300 ease-in-out w-full ${selectedLevel ? "flex flex-1" : "hidden md:flex md:flex-1"}`}
         >
+          <div className="md:hidden flex items-center gap-2 px-3 py-2 border-b border-divider flex-shrink-0">
+            <button
+              onClick={() => { setSelectedLevel(null); setLevelDetail(null); }}
+              className="flex items-center gap-1 text-sm text-default-600 hover:text-default-900 active:text-default-700"
+            >
+              <RiArrowLeftSLine size={18} />
+              Back
+            </button>
+          </div>
           <LevelPreview
             level={levelDetail}
             rank={selectedLevel?.rank ?? 0}

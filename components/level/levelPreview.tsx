@@ -175,8 +175,8 @@ export default function LevelPreview({
   const peakScore = peakTrendingScore(level.sends);
 
   return (
-    <div className="flex-1 flex overflow-hidden w-full">
-      <aside className="w-1/3 min-w-[220px] border-r border-divider flex flex-col overflow-y-auto max-w-sm">
+    <div className="flex-1 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden w-full">
+      <aside className="w-full md:w-1/3 md:min-w-[220px] md:max-w-sm border-b md:border-b-0 border-r-0 md:border-r border-divider flex flex-col md:overflow-y-auto flex-shrink-0">
         <div className="py-3 px-5 pb-4 flex items-stretch gap-3">
           <div className="min-w-0 flex-1 flex flex-col justify-center">
             <div className="flex items-center gap-2 mb-1">
@@ -312,7 +312,7 @@ export default function LevelPreview({
         ) : null}
       </aside>
 
-      <main className="flex-1 flex flex-col overflow-hidden">
+      <main className="w-full h-64 md:h-auto flex-shrink-0 md:flex-1 flex flex-col md:overflow-hidden">
         <ThemeProvider theme={muiTheme}>
           <LineChart
             dataset={dataset}
