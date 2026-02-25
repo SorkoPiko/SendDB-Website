@@ -121,7 +121,7 @@ export default function CreatorPreview({
           <span className="text-[15px] font-bold select-none">Creator Info</span>
           <button
             onClick={handleShare}
-            title="Copy link to level"
+            title="Copy link to creator"
             className="flex items-center justify-center w-5 h-5 rounded transition-colors duration-150 text-default-400 hover:text-default-700 hover:bg-default-100 active:bg-default-200"
           >
             {copied
