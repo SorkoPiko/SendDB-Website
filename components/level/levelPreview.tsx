@@ -34,10 +34,12 @@ export default function LevelPreview({
   level,
   rank,
   isLoadingDetail,
+  creatorParent = false,
 }: {
   level: Level | null;
   rank: number;
   isLoadingDetail?: boolean;
+  creatorParent?: boolean;
 }) {
   const { resolvedTheme } = useTheme();
   const muiTheme = useMemo(
@@ -187,15 +189,17 @@ export default function LevelPreview({
               by&nbsp;
               <span className="text-default-600 font-semibold inline-flex items-center gap-1">
                 {level.creator.name}
-                <a
-                  href={`/creator#${level.creator.player_id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Open creator in new tab"
-                  className="flex items-center justify-center w-5 h-5 rounded transition-colors duration-150 text-default-400 hover:text-default-700 hover:bg-default-100 active:bg-default-200"
-                >
-                  <SquareShareIcon size={15} />
-                </a>
+                {!creatorParent && (
+                  <a
+                    href={`/creator#${level.creator.player_id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Open creator in new tab"
+                    className="flex items-center justify-center w-5 h-5 rounded transition-colors duration-150 text-default-400 hover:text-default-700 hover:bg-default-100 active:bg-default-200"
+                  >
+                    <SquareShareIcon size={15} />
+                  </a>
+                )}
               </span>
             </p>
           </div>
@@ -246,7 +250,7 @@ export default function LevelPreview({
         <div className="flex flex-col">
           <StatRow label="Total Sends" value={level.sends.length.toLocaleString()} />
           {!level.rate && (
-            <StatRow label="Trending Score" value={(liveTrendingScore > 0 ? liveTrendingScore.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "N/A")} />
+            <StatRow label="Trending Score" value={liveTrendingScore.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} />
           )}
           <StatRow label="Trending Peak" value={peakScore.score.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} />
           {sendsPerDay !== null && (

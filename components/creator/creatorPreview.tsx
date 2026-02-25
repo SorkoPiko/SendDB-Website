@@ -11,11 +11,13 @@ import { fetchLevels, fetchLevel } from "@/api/integration";
 export default function CreatorPreview({
     creator,
     rank,
-    isLoadingDetail
+    isLoadingDetail,
+    collapseCreatorInfo = true,
 }: {
     creator: Creator | null,
     rank: number,
-    isLoadingDetail: boolean
+    isLoadingDetail: boolean,
+    collapseCreatorInfo?: boolean,
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -105,7 +107,7 @@ export default function CreatorPreview({
 
   return (
     <div className="flex-1 flex overflow-hidden w-full">
-      <aside className={`border-r border-divider flex flex-col overflow-y-auto transition-all duration-300 ease-in-out ${selectedLevel ? "w-0 min-w-0 opacity-0" : "w-1/3 min-w-[220px] max-w-sm opacity-100"}`}>
+      <aside className={`border-r border-divider flex flex-col overflow-y-auto transition-all duration-300 ease-in-out ${selectedLevel ? (collapseCreatorInfo ? "w-0 min-w-0 opacity-0" : "w-1/6") : "w-1/3 min-w-[220px] max-w-sm opacity-100"}`}>
         <div className="py-3 px-5 pb-4 flex items-stretch gap-3">
           <div className="min-w-0 flex-1 flex flex-col justify-center">
             <div className="flex items-center gap-2 mb-1">
@@ -184,7 +186,8 @@ export default function CreatorPreview({
                 </span>
                 <div className="flex items-center gap-1">
                   <span className="text-base font-bold tabular-nums text-default-800 transition-colors duration-200 group-hover:text-default-900">
-                    {`${topLevel.name} (${topLevel.send_count.toLocaleString()})`}
+                    {topLevel.name}
+                    <span className="text-default-500 ml-1">({topLevel.send_count.toLocaleString()})</span>
                   </span>
                   <a
                     href={`/level#${topLevel.level_id}`}
@@ -248,6 +251,7 @@ export default function CreatorPreview({
             level={levelDetail}
             rank={selectedLevel?.rank ?? 0}
             isLoadingDetail={isLoadingLevelDetail}
+            creatorParent={true}
           />
         </div>
       </main>

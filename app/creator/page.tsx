@@ -48,7 +48,7 @@ export default function CreatorPage() {
     <>
       <Divider />
       <div className="h-full flex flex-col">
-        <CreatorPreview creator={creator} rank={creator.rank} isLoadingDetail={false} />
+        <CreatorPreview creator={creator} rank={creator.rank} isLoadingDetail={false} collapseCreatorInfo={false} />
       </div>
       <Divider />
     </>
