@@ -1,6 +1,6 @@
 import { Creator, LeaderboardLevel, Level, TrendingLeaderboardLevel } from "./models";
-import { BatchLevelRequest, CreatorLeaderboardQuery, LeaderboardQuery, TrendingLeaderboardQuery } from "./requests";
-import { BatchLevelResponse, CreatorLeaderboardResponse, LevelLeaderboardResponse, SendDBAPIResponse } from "./responses";
+import { BatchLevelRequest, CreatorLeaderboardQuery, LeaderboardQuery, SearchQuery, TrendingLeaderboardQuery } from "./requests";
+import { BatchLevelResponse, CreatorLeaderboardResponse, LevelLeaderboardResponse, SearchResponse, SendDBAPIResponse } from "./responses";
 import { getCached, setCached } from "./cache";
 
 const API_BASE_URL = "https://api.senddb.dev/api/v1";
@@ -69,4 +69,8 @@ export async function fetchTrendingLeaderboard(request: TrendingLeaderboardQuery
 
 export async function fetchCreatorLeaderboard(request: CreatorLeaderboardQuery): Promise<SendDBAPIResponse<CreatorLeaderboardResponse>> {
   return fetchPostGeneric<CreatorLeaderboardResponse>(`${API_BASE_URL}/leaderboard/creators`, request);
+}
+
+export async function fetchSearch(request: SearchQuery): Promise<SendDBAPIResponse<SearchResponse>> {
+  return fetchPostGeneric<SearchResponse>(`${API_BASE_URL}/search`, request);
 }

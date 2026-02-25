@@ -180,7 +180,7 @@ export default function LevelPreview({
         <div className="py-3 px-5 pb-4 flex items-stretch gap-3">
           <div className="min-w-0 flex-1 flex flex-col justify-center">
             <div className="flex items-center gap-2 mb-1">
-              <span className="font-mono text-xl text-primary">{`#${rank.toLocaleString()}`}</span>
+              <span className="font-mono text-xl text-primary">{`#${rank}`}</span>
               <h2 className="text-2xl font-extrabold tracking-tight leading-tight text-default-900">
                 {level.name}
               </h2>

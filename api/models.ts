@@ -19,6 +19,9 @@ export interface LeaderboardRate {
   stars: number;
 }
 
+export type RateFilter = "Rated" | "Unrated";
+export type GamemodeFilter = "Classic" | "Platformer";
+
 export interface Rate {
   difficulty: number;
   points: number;
@@ -95,5 +98,29 @@ export interface LeaderboardCreator {
   trending_rank: number;
 }
 
-export type RateFilter = "Rated" | "Unrated";
-export type GamemodeFilter = "Classic" | "Platformer";
+export interface SearchResultCreator {
+  name: string;
+  player_id: number;
+} 
+
+export interface SearchLevel {
+  type: "level";
+  level_id: number;
+  name: string;
+  send_count: number;
+  creator: LevelCreator;
+  rate: LeaderboardRate | null;
+  platformer: boolean;
+}
+
+export interface SearchCreator {
+  type: "creator";
+  player_id: number;
+  name: string;
+  account_id: number;
+  send_count: number;
+  level_count: number;
+  rank: number;
+}
+
+export type SearchResult = SearchLevel | SearchCreator;

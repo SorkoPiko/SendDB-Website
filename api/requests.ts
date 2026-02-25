@@ -23,3 +23,8 @@ export interface CreatorLeaderboardQuery {
   offset: number;
   search: string | null;
 }
+
+export interface SearchQuery {
+  limit: number;
+  search: string;
+}

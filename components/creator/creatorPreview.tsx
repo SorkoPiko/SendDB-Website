@@ -108,11 +108,11 @@ export default function CreatorPreview({
 
   return (
     <div className="flex-1 flex overflow-hidden w-full">
-      <aside className={`border-r border-divider flex flex-col overflow-y-auto transition-all duration-300 ease-in-out ${selectedLevel ? (collapseCreatorInfo ? "w-0 min-w-0 opacity-0" : "w-1/6") : "w-1/3 min-w-[220px] max-w-sm opacity-100"}`}>
+      <aside className={`border-r border-divider flex flex-col overflow-y-auto transition-all duration-300 ease-in-out max-w-sm ${selectedLevel ? (collapseCreatorInfo ? "w-0 min-w-0 opacity-0" : "w-1/6") : "w-1/3 min-w-[220px]"}`}>
         <div className="py-3 px-5 pb-4 flex items-stretch gap-3">
           <div className="min-w-0 flex-1 flex flex-col justify-center">
             <div className="flex items-center gap-2 mb-1">
-              <span className="font-mono text-xl text-primary">{`#${rank.toLocaleString()}`}</span>
+              <span className="font-mono text-xl text-primary">{`#${rank}`}</span>
               <h2 className="text-2xl font-extrabold tracking-tight leading-tight text-default-900">
                 {creator.name}
               </h2>
