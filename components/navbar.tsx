@@ -44,13 +44,17 @@ export const Navbar = () => {
     const searchContainerRef = useRef<HTMLDivElement>(null);
     const pathname = usePathname();
     const router = useRouter();
-    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+    const [isMac, setIsMac] = useState(false);
     const [searchValue, setSearchValue] = useState("");
     const [debouncedSearch, setDebouncedSearch] = useState("");
     const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
     const [isSearching, setIsSearching] = useState(false);
     const [showResults, setShowResults] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(-1);
+
+   useEffect(() => {
+      setIsMac(navigator.platform.toUpperCase().indexOf('MAC') >= 0);
+    }, []);
 
     useEffect(() => {
       const handleKeyDown = (event: KeyboardEvent) => {

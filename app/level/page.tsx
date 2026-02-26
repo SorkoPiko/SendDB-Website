@@ -29,9 +29,7 @@ export default function LevelPage() {
 
     const onHashChange = () => loadLevel(window.location.hash);
     window.addEventListener("hashchange", onHashChange);
-    return () => {
-      window.removeEventListener("hashchange", onHashChange);
-    }
+    return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
 
   if (isLoading) {
