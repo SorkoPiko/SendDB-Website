@@ -16,7 +16,7 @@ export default function LevelRow({
 return (
     <button
       onClick={onClick}
-      className={`w-full text-left px-4 py-3 flex items-stretch gap-3 border-b border-divider/40 hover:bg-default-100/60 group
+      className={`w-full text-left px-4 py-3 flex items-stretch gap-3 border-b border-divider/40 hover:bg-default-100/60 group outline-none
         ${isSelected ? "bg-default-100 border-l-2 border-l-primary" : "border-l-2 border-l-transparent"}`}
     >
       <span className={`text-xs font-mono w-5 flex-shrink-0 text-right flex items-center justify-end ${isSelected ? "text-primary" : "text-default-400"}`}>

@@ -43,13 +43,6 @@ export default function LevelsPage() {
   const [levelDetail, setLevelDetail] = useState<Level | null>(null);
   const [isLoadingDetail, setIsLoadingDetail] = useState(false);
 
-  // useEffect(() => {
-  //   fetch('/level.json')
-  //     .then((res) => res.json())
-  //     .then((data: Level) => setLevelDetail(data))
-  //     .catch((error) => console.error('Failed to load placeholder level:', error));
-  // }, []);
-
   const handleSelectLevel = useCallback(async (level: LeaderboardLevel) => {
     setLevelDetail(null);
     if (selectedLevel?.level_id === level.level_id) {
@@ -67,6 +60,48 @@ export default function LevelsPage() {
 
     setIsLoadingDetail(false);
   }, [selectedLevel]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.dataset.elementid === "navbar-search-input") return;
+      if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+
+      e.preventDefault();
+      const currentIndex = selectedLevel !== null
+        ? levels.findIndex((l) => l.level_id === selectedLevel.level_id)
+        : -1;
+      const nextIndex =
+        e.key === "ArrowDown"
+          ? Math.min(currentIndex + 1, levels.length - 1)
+          : Math.max(currentIndex - 1, 0);
+
+      if (nextIndex !== currentIndex && levels[nextIndex]) {
+        const newLevel = levels[nextIndex];
+        const remaining = levels.length - nextIndex - 1;
+        if (remaining <= 5 && hasMore && !isFetchingMore && !isLoading) {
+          loadLevels(offset);
+        }
+        handleSelectLevel(newLevel);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [levels, selectedLevel, handleSelectLevel]);
+
+  useEffect(() => {
+    if (!selectedLevel || !listRef.current) return;
+    const el = listRef.current.querySelector<HTMLElement>(`[data-level-id="${selectedLevel.level_id}"]`);
+    el?.scrollIntoView({ block: "nearest" });
+  }, [selectedLevel]);
+
+  // useEffect(() => {
+  //   fetch('/level.json')
+  //     .then((res) => res.json())
+  //     .then((data: Level) => setLevelDetail(data))
+  //     .catch((error) => console.error('Failed to load placeholder level:', error));
+  // }, []);
 
   useEffect(() => {
     const t = setTimeout(() => setDebouncedSearch(search), 350);
@@ -175,13 +210,14 @@ export default function LevelsPage() {
             ) : (
               <>
                 {levels.map((level, i) => (
-                  <LevelRow
-                    key={level.level_id}
-                    level={level}
-                    rank={level.rank}
-                    isSelected={selectedLevel?.level_id === level.level_id}
-                    onClick={() => handleSelectLevel(level)}
-                  />
+                  <div key={level.level_id} data-level-id={level.level_id}>
+                    <LevelRow
+                      level={level}
+                      rank={level.rank}
+                      isSelected={selectedLevel?.level_id === level.level_id}
+                      onClick={() => handleSelectLevel(level)}
+                    />
+                  </div>
                 ))}
 
                 <div ref={sentinelRef} className="h-4" />

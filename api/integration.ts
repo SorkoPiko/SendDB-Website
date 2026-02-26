@@ -72,5 +72,11 @@ export async function fetchCreatorLeaderboard(request: CreatorLeaderboardQuery):
 }
 
 export async function fetchSearch(request: SearchQuery): Promise<SendDBAPIResponse<SearchResponse>> {
-  return fetchPostGeneric<SearchResponse>(`${API_BASE_URL}/search`, request);
+  const key = `search:${JSON.stringify(request)}`;
+  const cached = getCached<SearchResponse>(key);
+  if (cached) return { success: true, data: cached };
+
+  const res = await fetchPostGeneric<SearchResponse>(`${API_BASE_URL}/search`, request);
+  if (res.success) setCached(key, res.data);
+  return res;
 }

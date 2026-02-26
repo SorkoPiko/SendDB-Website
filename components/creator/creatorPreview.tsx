@@ -1,7 +1,7 @@
 import { Spinner } from "@heroui/spinner";
 import { SelectIcon } from "../icons";
 import { Creator, LeaderboardLevel, Level, BatchLevel } from "@/api/models";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Divider } from "@heroui/divider";
 import StatRow from "../statRow";
 import LevelRow from "@/components/level/levelRow";
@@ -27,6 +27,7 @@ export default function CreatorPreview({
   const [selectedLevel, setSelectedLevel] = useState<LeaderboardLevel | null>(null);
   const [levelDetail, setLevelDetail] = useState<Level | null>(null);
   const [isLoadingLevelDetail, setIsLoadingLevelDetail] = useState(false);
+  const levelListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setSelectedLevel(null);
@@ -80,6 +81,44 @@ export default function CreatorPreview({
     setIsLoadingLevelDetail(false);
   }, [selectedLevel]);
   
+  useEffect(() => {
+    if (!selectedLevel || !levelListRef.current) return;
+    const el = levelListRef.current.querySelector<HTMLElement>(`[data-level-id="${selectedLevel.level_id}"]`);
+    el?.scrollIntoView({ block: "nearest" });
+  }, [selectedLevel]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.dataset.elementid === "navbar-search-input") return;
+      if (batchLevels.length === 0) return;
+      if (!selectedLevel) {
+        if (e.key === "ArrowRight") {
+          handleSelectLevel(batchLevels[0]);
+          e.preventDefault();
+        }
+        return;
+      }
+      if (e.key === "Escape" || e.key === "ArrowLeft") {
+        setSelectedLevel(null);
+        setLevelDetail(null);
+        e.preventDefault();
+        return;
+      }
+      if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      const currentIndex = batchLevels.findIndex(l => l.level_id === selectedLevel.level_id);
+      const nextIndex =
+        e.key === "ArrowDown"
+          ? Math.min(currentIndex + 1, batchLevels.length - 1)
+          : Math.max(currentIndex - 1, 0);
+      if (nextIndex !== currentIndex) handleSelectLevel(batchLevels[nextIndex]);
+    };
+    document.addEventListener("keydown", handleKeyDown, true);
+    return () => document.removeEventListener("keydown", handleKeyDown, true);
+  }, [selectedLevel, batchLevels, handleSelectLevel]);
+
   const handleShare = () => {
     const url = `${window.location.origin}/creator#${creator?.player_id}`;
     navigator.clipboard.writeText(url).then(() => {
@@ -222,7 +261,7 @@ export default function CreatorPreview({
             <span className="text-[15px] font-bold select-none">Levels</span>
           </div>
           <Divider />
-          <div className="flex-1 overflow-y-auto overscroll-contain">
+          <div ref={levelListRef} className="flex-1 overflow-y-auto overscroll-contain">
             {isLoadingBatch ? (
               <div className="flex items-center justify-center h-20">
                 <Spinner size="sm" />
@@ -233,13 +272,14 @@ export default function CreatorPreview({
               </div>
             ) : (
               batchLevels.map(level => (
-                <LevelRow
-                  key={level.level_id}
-                  level={level}
-                  rank={level.rank}
-                  isSelected={selectedLevel?.level_id === level.level_id}
-                  onClick={() => handleSelectLevel(level)}
-                />
+                <div key={level.level_id} data-level-id={level.level_id}>
+                  <LevelRow
+                    level={level}
+                    rank={level.rank}
+                    isSelected={selectedLevel?.level_id === level.level_id}
+                    onClick={() => handleSelectLevel(level)}
+                  />
+                </div>
               ))
             )}
           </div>

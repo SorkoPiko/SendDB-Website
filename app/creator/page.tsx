@@ -29,7 +29,9 @@ export default function CreatorPage() {
 
     const onHashChange = () => loadCreator(window.location.hash);
     window.addEventListener("hashchange", onHashChange);
-    return () => window.removeEventListener("hashchange", onHashChange);
+    return () => {
+      window.removeEventListener("hashchange", onHashChange);
+    };
   }, []);
 
   if (isLoading) {

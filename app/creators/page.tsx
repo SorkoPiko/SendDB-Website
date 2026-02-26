@@ -57,6 +57,36 @@ export default function CreatorsPage() {
   }, [selectedCreator]);
 
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.dataset.elementid === "navbar-search-input") return;
+      if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+
+      e.preventDefault();
+      const currentIndex = selectedCreator !== null
+        ? creators.findIndex((c) => c.player_id === selectedCreator.player_id)
+        : -1;
+      const nextIndex =
+        e.key === "ArrowDown"
+          ? Math.min(currentIndex + 1, creators.length - 1)
+          : Math.max(currentIndex - 1, 0);
+
+      if (nextIndex !== currentIndex && creators[nextIndex]) {
+        handleSelectCreator(creators[nextIndex]);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [creators, selectedCreator, handleSelectCreator]);
+
+  useEffect(() => {
+    if (!selectedCreator || !listRef.current) return;
+    const el = listRef.current.querySelector<HTMLElement>(`[data-creator-id="${selectedCreator.player_id}"]`);
+    el?.scrollIntoView({ block: "nearest" });
+  }, [selectedCreator]);
+
+  useEffect(() => {
     const t = setTimeout(() => setDebouncedSearch(search), 350);
     return () => clearTimeout(t);
   }, [search]);
@@ -128,13 +158,15 @@ export default function CreatorsPage() {
               ) : (
                 <>
                   {creators.map((creator, i) => (
-                    <CreatorRow
-                      key={creator.player_id}
-                      creator={creator}
-                      rank={creator.rank}
-                      isSelected={selectedCreator?.player_id === creator.player_id}
-                      onClick={() => handleSelectCreator(creator)}
-                    />
+                    <div key={creator.player_id} data-creator-id={creator.player_id}>
+                      <CreatorRow
+                        key={creator.player_id}
+                        creator={creator}
+                        rank={creator.rank}
+                        isSelected={selectedCreator?.player_id === creator.player_id}
+                        onClick={() => handleSelectCreator(creator)}
+                      />
+                    </div>
                   ))}
 
                   <div ref={sentinelRef} className="h-4" />

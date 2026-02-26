@@ -25,7 +25,7 @@ import {
   GeodeIcon,
 } from "@/components/icons";
 import { usePathname, useRouter } from "next/navigation";
-import { RiCodeSSlashLine, RiDiscordFill, RiGithubFill, RiSearchLine, RiTwitterFill, RiUser3Line, RiSwordLine } from "@remixicon/react";
+import { RiCodeSSlashLine, RiDiscordFill, RiGithubFill, RiSearchLine, RiTwitterFill } from "@remixicon/react";
 import { fetchSearch } from "@/api/integration";
 import { LeaderboardCreator, LeaderboardLevel, SearchCreator, SearchLevel, SearchResult } from "@/api/models";
 import LevelRow from "./level/levelRow";
@@ -44,17 +44,13 @@ export const Navbar = () => {
     const searchContainerRef = useRef<HTMLDivElement>(null);
     const pathname = usePathname();
     const router = useRouter();
-    const [isMac, setIsMac] = useState(false);
+    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
     const [searchValue, setSearchValue] = useState("");
     const [debouncedSearch, setDebouncedSearch] = useState("");
     const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
     const [isSearching, setIsSearching] = useState(false);
     const [showResults, setShowResults] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(-1);
-
-    useEffect(() => {
-      setIsMac(navigator.platform.toUpperCase().indexOf('MAC') >= 0);
-    }, []);
 
     useEffect(() => {
       const handleKeyDown = (event: KeyboardEvent) => {
@@ -97,6 +93,12 @@ export const Navbar = () => {
     }, [debouncedSearch]);
 
     useEffect(() => {
+      if (selectedIndex < 0 || !searchContainerRef.current) return;
+      const el = searchContainerRef.current.querySelector<HTMLElement>(`[data-search-index="${selectedIndex}"]`);
+      el?.scrollIntoView({ block: "nearest" });
+    }, [selectedIndex]);
+
+    useEffect(() => {
       const handleClickOutside = (e: MouseEvent) => {
         if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
           setShowResults(false);
@@ -111,15 +113,24 @@ export const Navbar = () => {
       setSearchValue("");
       setDebouncedSearch("");
       if (result.type === "level") {
-        router.push(`/level#${result.level_id}`);
+        if (window.location.pathname === "/level") {
+          window.location.hash = `#${result.level_id}`;
+        } else {
+          router.push(`/level#${result.level_id}`);
+        }
       } else {
-        router.push(`/creator#${result.player_id}`);
+        if (window.location.pathname === "/creator") {
+          window.location.hash = `#${result.player_id}`;
+        } else {
+          router.push(`/creator#${result.player_id}`);
+        }
       }
     };
 
   const searchInput = (
     <div ref={searchContainerRef} className="relative">
       <Input
+        data-elementid="navbar-search-input"
         ref={searchInputRef}
         aria-label="Search"
         classNames={{
@@ -156,6 +167,7 @@ export const Navbar = () => {
             setSearchResults([]);
           }
         }}
+        value={searchValue}
         onFocus={() => {
           if (searchResults.length > 0) setShowResults(true);
         }}
@@ -168,21 +180,25 @@ export const Navbar = () => {
         <div className="absolute top-full mt-1 left-0 right-0 z-50 bg-content1 border border-divider rounded-lg shadow-lg overflow-y-auto max-h-[70vh] min-w-64">
           {searchResults.map((result, index) => (
             result.type === "level" ? (
-              <LevelRow
-                key={result.level_id}
-                level={toLevel(result, index)}
-                rank={index + 1}
-                isSelected={selectedIndex === index}
-                onClick={() => handleResultClick(result)}
-              />
+              <div key={result.level_id} data-search-index={index}>
+                <LevelRow
+                  key={result.level_id}
+                  level={toLevel(result, index)}
+                  rank={index + 1}
+                  isSelected={selectedIndex === index}
+                  onClick={() => handleResultClick(result)}
+                />
+              </div>
             ) : (
-              <CreatorRow
-                key={result.player_id}
-                creator={toCreator(result)}
-                rank={index + 1}
-                isSelected={selectedIndex === index}
-                onClick={() => handleResultClick(result)}
-              />
+              <div key={result.player_id} data-search-index={index}>
+                <CreatorRow
+                  key={result.player_id}
+                  creator={toCreator(result)}
+                  rank={index + 1}
+                  isSelected={selectedIndex === index}
+                  onClick={() => handleResultClick(result)}
+                />
+              </div>
             )
           ))}
         </div>
